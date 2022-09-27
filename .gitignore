@@ -1,18 +1,228 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
 
-# Other files and folders
-.settings/
+//using System.Reflection.Metadata.Ecma335;
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+////Calculator calc = new Calculator();
+////Console.Write("Введите выражение: ");
+////string expression = Console.ReadLine();
+////char sign = ' ';
+////foreach (char item in expression)
+////{
+////    if (item == '+' || item == '-' || item == '*' || item == '/')
+////    {
+////        sign = item;
+////        break;
+////    }
+////}
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+////try
+////{
+////    string[] numbers = expression.Split(sign);
+////    CalcDelegate del = null;
+////    switch (sign)
+////    {
+////        case '+':
+////            {
+////                del = new CalcDelegate(calc.Add);
+////                break;
+////            }
+////        case '-':
+////            {
+////                del = new CalcDelegate(Calculator.Sub);
+////                break;
+////            }
+////        case '*':
+////            {
+////                del = calc.Mult;
+////                break;
+////            }
+////        case '/':
+////            {
+////                del = calc.Div;
+////                break;
+////            }
+////        default:
+////            throw new InvalidOperationException();
+
+////    }
+////    Console.WriteLine($"Result: {del(double.Parse(numbers[0]), double.Parse(numbers[1]))}");
+
+////}
+////catch (Exception ex)
+////{
+////    Console.WriteLine(ex.Message);
+////}
+
+
+
+
+//Calculator calc = new Calculator();
+//CalcDelegate delAll = calc.Add;
+//delAll += Calculator.Sub;
+//delAll += calc.Mult;
+//delAll += calc.Div;
+
+//foreach (CalcDelegate item in delAll.GetInvocationList())
+//{
+//    try
+//    {
+//        Console.WriteLine($"Result {item(10, 5)}");
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+//}
+
+
+
+
+//ExampleClass example = new ExampleClass();
+//AddDelegate<int> delInt = example.AddInt;
+//Console.WriteLine($"Сумма целых чисел {delInt(8, 6)}");
+//AddDelegate<double> delDouble = example.AddDouble;
+//Console.WriteLine($"Сумма вещественных чисел {delDouble(45.67, 62.81)}");
+//AddDelegate<char> delChar = ExampleClass.AddChar;
+//Console.WriteLine($"Сумма вещественных чисел {delChar('S', 'h')}");
+
+
+//Console.WriteLine((int)'S');
+//Console.WriteLine((int)'h');
+//Console.WriteLine((int)'>');
+
+
+
+//public delegate T AddDelegate<T>(T x, T y);
+//public class ExampleClass
+//{
+
+//    public int AddInt(int x, int y)
+//    {
+//        return x + y;
+//    }
+
+//    public double AddDouble(double x, double y)
+//    {
+//        return x + y;
+//    }
+
+//    public static char AddChar(char x, char y)
+//    {
+//        return (char)(x + y);
+//    }
+//}
+
+
+//public delegate double CalcDelegate(double x, double y);
+//public class Calculator
+//{
+//    public double Add(double x, double y)
+//    {
+//        return x + y;
+//    }
+//    public static double Sub(double x, double y)
+//    {
+//        return x - y;
+//    }
+//    public double Mult(double x, double y)
+//    {
+//        return x * y;
+//    }
+//    public double Div(double x, double y)
+//    {
+//        if (y != 0)
+//        {
+//            return x / y;
+//        }
+//        throw new DivideByZeroException();
+//    }
+//}
+
+
+using System.Collections.Generic;
+using System.Linq;
+
+//static void FullName(Student student)
+//{
+//    Console.WriteLine($" {student.LastName}\t{student.FirstName}");
+//}
+
+static string FullName(Student student)
+{
+    return $" {student.LastName}\t{student.FirstName}";
+}
+
+static bool OnlySpring(Student student)
+{
+    return student.BirthDate.Month >= 3 && student.BirthDate.Month <= 5;
+}
+
+static int SortBirthDate(Student student1, Student student2)
+{
+    return student1.BirthDate.CompareTo(student2.BirthDate);
+}
+
+List<Student> group = new List<Student>
+{
+    new Student
+    {
+        FirstName="John",
+        LastName="Miller",
+        BirthDate= new DateTime(1997,3,12)
+    },
+    new Student
+    {
+        FirstName="Candice",
+        LastName="Leman",
+        BirthDate= new DateTime(1998,7,22)
+    },
+    new Student
+    {
+        FirstName="Joey",
+        LastName="Finch",
+        BirthDate= new DateTime(1996,11,30)
+    },
+    new Student
+    {
+        FirstName="Nicole",
+        LastName="Taylor",
+        BirthDate= new DateTime(1996,5,10)
+    }
+};
+
+//Console.WriteLine("Список студентов");
+//group.ForEach(FullName);//Делегат Action<T>
+
+//IEnumerable<string> students = group.Select(FullName);//Обобенный метод Select который реализуеться с помощью делегата Func<T>
+//foreach (string item in students)
+//{
+//    Console.WriteLine(item);
+//}
+
+//Console.WriteLine("Родились весной");
+//List<Student> students = group.FindAll(OnlySpring); //Обобщеный делегат Predicate<T>
+//foreach (Student item in students) 
+//{
+//    Console.WriteLine(item);
+//}
+
+
+
+//Console.WriteLine("Сортировка по дате рождения ");
+//group.Sort(SortBirthDate);//Использование делегата  Comparison<T>
+//foreach (Student item in group)
+//{
+//    Console.WriteLine(item);
+//}
+
+
+class Student
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public DateTime BirthDate { get; set; }
+
+    public override string ToString()
+    {
+        return $"Фамилия: {LastName}, Имя: {FirstName}, Дата рождения {BirthDate.ToLongDateString()}";
+    }
+}
